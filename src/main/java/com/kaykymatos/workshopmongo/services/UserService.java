@@ -1,6 +1,7 @@
 package com.kaykymatos.workshopmongo.services;
 
 import com.kaykymatos.workshopmongo.domain.User;
+import com.kaykymatos.workshopmongo.dto.UserDTO;
 import com.kaykymatos.workshopmongo.repository.UserRepository;
 import com.kaykymatos.workshopmongo.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +22,13 @@ public class UserService {
     public User findById(String id) {
         Optional<User> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+    }
+
+    public User insert(User obj) {
+        return repository.insert(obj);
+    }
+
+    public User fromDto(UserDTO dto) {
+        return new User(dto.getId(), dto.getName(), dto.getEmail());
     }
 }
