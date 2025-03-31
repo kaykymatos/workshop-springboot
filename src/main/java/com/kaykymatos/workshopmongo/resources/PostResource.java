@@ -3,9 +3,11 @@ package com.kaykymatos.workshopmongo.resources;
 import com.kaykymatos.workshopmongo.domain.Post;
 import com.kaykymatos.workshopmongo.domain.User;
 import com.kaykymatos.workshopmongo.dto.UserDTO;
+import com.kaykymatos.workshopmongo.resources.util.URL;
 import com.kaykymatos.workshopmongo.services.PostService;
 import com.kaykymatos.workshopmongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -32,4 +34,12 @@ public class PostResource {
 
         return ResponseEntity.ok().body(post);
     }
+
+    @RequestMapping(value = "/titlesearch", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text", defaultValue = "") String text) {
+        List<Post> posts = service.findByTitle(URL.decodeParam(text));
+
+        return ResponseEntity.ok().body(posts);
+    }
+
 }
